@@ -1,2 +1,0 @@
-# Rust
-Learn rust Doc
