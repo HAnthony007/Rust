@@ -20,7 +20,7 @@ fn main() {
             Ok(number) => number,
             Err(_) => continue,
         };
-        println!("Vous avez devine le nombre {}", guess);
+        println!("Vous avez devine le nombre {}", guess)
 
         match guess.cmp(&nombre_secret) {
             Ordering::Less => println!("Trop petit !"),
