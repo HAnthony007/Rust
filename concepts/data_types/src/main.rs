@@ -10,5 +10,16 @@ fn main() {
     //
     //  isize and usize depend on the kind of computer your program is running on: 64 bits if you’re on a 64-bit architecture and 32 bits if you’re on a 32-bit architecture.
     let x: u8 = 255;
-    println!("La valeur de x est: {x}.")
+    println!("La valeur de x est: {x}.");
+
+    // Floating-Point Types
+    // f32, f64
+    // f32: single-precision, f64: double-precision
+    // f64 is the default type for floating-point numbers because on modern CPUs it’s roughly the same speed as f32 but is capable of more precision.
+    // f64 64 bits
+    // f32 32 bits
+    let single: f32 = 3.0 / 9.0;
+    let double: f64 = 3.0 / 9.0;
+    println!("La valeur de simple precision est: {single}");
+    println!("La valeur de double precision est: {double}");
 }
