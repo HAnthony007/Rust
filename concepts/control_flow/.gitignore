@@ -1,0 +1,18 @@
+# Ignore Cargo artifacts
+/target
+/Cargo.lock
+**/*.rs.bk
+
+/debug/
+*.log
+*.lock
+
+# Ignore IDE and editor specific files
+/.idea/
+/.vscode/
+/*.swp
+```
+# Fichiers de test
+/coverage/
+/test-results/
+/output/
