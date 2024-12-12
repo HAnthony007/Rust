@@ -1,87 +1,71 @@
 use std::io::{self, Write};
 
 fn main() {
-    println!("Fahrenheit to Celsius converter!");
-
-    println!("1. Fahrenheit to Celsius");
-    println!("2. Celsius to Fahrenheit");
+    println!("\n\t## Fahrenheit & Celsius Converter: ##");
 
     loop {
+        println!("\n1. Fahrenheit to Celsius\n2. Celsius to Fahrenheit\n0. Exit");
         let mut choice = String::new();
 
-        print!("Enter your choice [1/2] (1): ");
-        io::stdout().flush().unwrap();
-        io::stdin()
-            .read_line(&mut choice)
-            .expect("Failed to read line");
+        input("Enter your choice [1/2/0] (1): ", &mut choice);
 
         let choice = if choice.trim().is_empty() {
             1
         } else {
             match choice.trim().parse() {
                 Ok(num) => match num {
-                    1 | 2 => num,
+                    0 | 1 | 2 => num,
                     _ => {
-                        println!("Invalid input. Please enter 1 or 2.");
+                        println!("Invalid input. Please enter 1 or 2 or 0.");
                         continue;
                     }
                 },
                 Err(_) => {
-                    println!("Invalid input. Please enter 1 or 2.");
+                    println!("Invalid input. Please enter 1 or 2 or 0.");
                     continue;
                 }
             }
         };
 
         if choice == 1 {
-            println!("# Fahrenheit to Celsius");
-
-            loop {
-                print!("Enter the temperature in Fahrenheit: ");
-                io::stdout().flush().unwrap();
-                let mut fahrenheit = String::new();
-                io::stdin()
-                    .read_line(&mut fahrenheit)
-                    .expect("Failed to read line");
-
-                let fahrenheit: f64 = match fahrenheit.trim().parse() {
-                    Ok(num) => num,
-                    Err(_) => {
-                        println!("Invalid fahrenheit. Please enter a number.");
-                        continue;
-                    }
-                };
-
-                let celsius = (fahrenheit - 32.0) / 1.8;
-
-                println!("The temperature in Celsius is: {celsius}");
-
-                break;
-            }
+            converter("Fahrenheit", "Celsius", false);
+        } else if choice == 2 {
+            converter("Celsius", "Fahrenheit", true);
         } else {
-            println!("# Celsius to Fahrenheit");
-            loop {
-                println!("Enter the temperature in Celsius: ");
-                io::stdout().flush().unwrap();
-                let mut celsius = String::new();
-                io::stdin()
-                    .read_line(&mut celsius)
-                    .expect("Failed to read line");
-
-                let celsius: f64 = match celsius.trim().parse() {
-                    Ok(num) => num,
-                    Err(_) => {
-                        println!("Invalid celsius, please enter number");
-                        continue;
-                    }
-                };
-
-                let fahrenheit = (celsius * 1.8) + 32.0;
-                println!("The temperature in Fahrenheit is: {fahrenheit}");
-
-                break;
-            }
+            break println!("\nGoodbye!");
         }
-        break;
+    }
+}
+
+fn input(message: &str, variable: &mut String) -> String {
+    print!("{}", message);
+    io::stdout().flush().unwrap();
+    io::stdin()
+        .read_line(variable)
+        .expect("Failed to read line");
+    variable.to_string()
+}
+
+fn converter(from_desc: &str, to_desc: &str, is_to_fahrenheit: bool) {
+    println!("\n#Converting {from_desc} to {to_desc}");
+    loop {
+        let mut from = String::new();
+        input(
+            &format!("Enter the temperature in °{from_desc}: "),
+            &mut from,
+        );
+        let from: f64 = match from.trim().parse() {
+            Ok(num) => num,
+            Err(_) => {
+                println!("Invalid {from_desc}, please enter number");
+                continue;
+            }
+        };
+        let to = if is_to_fahrenheit {
+            (from * 1.8) + 32.0
+        } else {
+            (from - 32.0) / 1.8
+        };
+        break println!("The temperature: {from}°{from_desc} is {to:.4}°{to_desc}\n");
     }
 }
