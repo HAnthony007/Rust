@@ -1,3 +1,4 @@
 fn main() {
-    println!("Hello, world!");
+    println!("\n\t# Welcome to the Rust Programming Language! #");
+    println!("\nWhat is Ownership?");
 }
