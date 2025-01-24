@@ -48,7 +48,7 @@ fn main() {
     let s1 = String::from("Hello");
 
     let (s2, taille) = calculer_taille(s1);
-    println!("La taille de '{}' est de {}.", s2, taille);
+    println!("La taille de '{}' est de {}.", s2, taille)
 }
 
 fn calculer_taille(s: String) -> (String, usize) {

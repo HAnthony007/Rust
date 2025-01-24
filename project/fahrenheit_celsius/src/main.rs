@@ -61,11 +61,53 @@ fn converter(from_desc: &str, to_desc: &str, is_to_fahrenheit: bool) {
                 continue;
             }
         };
-        let to = if is_to_fahrenheit {
-            (from * 1.8) + 32.0
-        } else {
-            (from - 32.0) / 1.8
-        };
-        break println!("The temperature: {from}°{from_desc} is {to:.4}°{to_desc}\n");
+        let to = convert_temperature(from, is_to_fahrenheit);
+        break println!("The temperature: {from}°{from_desc} is {to}°{to_desc}\n");
+    }
+}
+
+fn convert_temperature(value: f64, is_to_fahrenheit: bool) -> f64 {
+    let result = if is_to_fahrenheit {
+        (value * 1.8) + 32.0
+    } else {
+        (value - 32.0) / 1.8
+    };
+    (result * 10_000.0).round() / 10_000.0
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_celsius_to_fahrenheit_simple() {
+        assert_eq!(convert_temperature(0.0, true), 32.0);
+        assert_eq!(convert_temperature(100.0, true), 212.0);
+        assert_eq!(convert_temperature(-40.0, true), -40.0);
+    }
+
+    #[test]
+    fn test_fahrenheit_to_celsius_simple() {
+        assert_eq!(convert_temperature(32.0, false), 0.0);
+        assert_eq!(convert_temperature(212.0, false), 100.0);
+        assert_eq!(convert_temperature(-40.0, false), -40.0);
+    }
+
+    #[test]
+    fn test_celsius_to_fahrenheit_decimal() {
+        assert_eq!(convert_temperature(25.5, true), 77.9);
+        assert_eq!(convert_temperature(37.7778, true), 100.0);
+    }
+
+    #[test]
+    fn test_fahrenheit_to_celsius_decimal() {
+        assert_eq!(convert_temperature(77.9, false), 25.5);
+        assert_eq!(convert_temperature(100.0, false), 37.7778);
+    }
+
+    #[test]
+    fn test_rounding_precision() {
+        assert_eq!(convert_temperature(36.685, true), 98.033);
+        assert_eq!(convert_temperature(98.243, false), 36.8017);
     }
 }
